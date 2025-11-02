@@ -22,7 +22,6 @@ public:
         {
             string tag = rowdata["tag"];
             trainingdata[num_posts].first = tag;
-            labels.insert(tag);
             labelcount[tag] += 1;
             istringstream source(rowdata["content"]);
             string word;
@@ -116,8 +115,6 @@ protected:
     map<string, map<string, int>> label_words;
 
     set<string> vocab;
-
-    set<string> labels;
 };
 
 class TestModel : public Model
@@ -151,15 +148,17 @@ public:
         map<string, double> probabilities;
         const string *prediction = nullptr;
         string key;
-        for (string label : labels)
+        for (auto l : labelcount)
         {
+            string label = l.first;
             probabilities[label] = log_prior(label);
             set<string> uniquewords;
             for (string word : testdata[test].second)
             {
                 uniquewords.insert(word);
             }
-            for (string unique : uniquewords){
+            for (string unique : uniquewords)
+            {
                 probabilities[label] += log_likelihood(label, unique);
             }
             if (!prediction)

@@ -66,3 +66,11 @@ style :
     --files $(CPD_FILES)
 	@echo "########################################"
 	@echo "EECS 280 style checks PASS"
+sync :
+	rsync \
+  -rtv \
+  --delete \
+  --exclude '.git*' \
+  --filter=':- .gitignore' \
+  ../p4-ml-classifier/ \
+  jtuatini@login-course.engin.umich.edu:p4-ml-classifier-copy/
