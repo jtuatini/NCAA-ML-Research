@@ -1,5 +1,11 @@
 # Effects of Sports Betting Markets on the College Football Playoff and End of Season AP Poll Rankings
 
+![License](https://img.shields.io/badge/license-MIT-blue)
+![C++17](https://img.shields.io/badge/C%2B%2B-17-00599C?logo=cplusplus&logoColor=white)
+![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)
+![SPSS](https://img.shields.io/badge/SPSS-29-052FAD?logo=ibm&logoColor=white)
+![UROP](https://img.shields.io/badge/U%E2%80%91M%20UROP-2024–25-FFCB05?labelColor=00274C)
+
 Authored by Jared Tuatini, advised by Michael Mignano, Ph.D. (School of Kinesiology). Symposium poster presented April 2025; this repository extends the original 2024 analysis with an out-of-sample validation on the 2025-26 season.
 
 ## Introduction
