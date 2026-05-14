@@ -13,6 +13,3 @@ classifier.dSYM/
 # Python caches
 __pycache__/
 *.pyc
-
-# Generated plots (keep .gitkeep, ignore PNGs)
-results/figures/*.png
