@@ -1,76 +1,31 @@
-# Makefile
-# Build rules for EECS 280 project 4
+# NCAA UROP — Makefile for the C++ AP-rank classifier.
 
-# Compiler
-CXX ?= g++
+CXX        = g++
+CXXFLAGS   = -std=c++17 -Wall -Wextra -pedantic
+EXECUTABLE = classifier
+SOURCES    = classifier.cpp
 
-# Compiler flags
-CXXFLAGS ?= --std=c++17 -Wall -Werror -pedantic -g -Wno-sign-compare -Wno-comment -fsanitize=address -fsanitize=undefined
+INPUT_2024 = team_season_summary_2024.csv
+INPUT_2025 = team_season_summary_2025.csv
 
-# Run a regression test
-test: classifier.exe
-	# Train-only tests
+.PHONY: all release debug run run-2024 run-2025 clean
 
-	./classifier.exe train_small.csv > train_small_train_only.out.txt
-	diff -q train_small_train_only.out.txt train_small_train_only.out.correct
+all: release
 
-	./classifier.exe w16_projects_exam.csv > w16_projects_exam_train_only.out.txt
-	diff -q w16_projects_exam_train_only.out.txt w16_projects_exam_train_only.out.correct
+release: CXXFLAGS += -O3 -DNDEBUG
+release: $(EXECUTABLE)
 
-	# Predictive tests
+$(EXECUTABLE): $(SOURCES)
+	$(CXX) $(CXXFLAGS) $< -o $@
 
-	./classifier.exe train_small.csv test_small.csv > test_small.out.txt
-	diff -q test_small.out.txt test_small.out.correct
+run: run-2024 run-2025
 
-	./classifier.exe w16_projects_exam.csv sp16_projects_exam.csv > projects_exam.out.txt
-	diff -q projects_exam.out.txt projects_exam.out.correct
+run-2024: release
+	./$(EXECUTABLE) < $(INPUT_2024)
 
-	./classifier.exe w14-f15_instructor_student.csv w16_instructor_student.csv > instructor_student.out.txt
-	diff -q instructor_student.out.txt instructor_student.out.correct
+run-2025: release
+	./$(EXECUTABLE) < $(INPUT_2025)
 
-classifier.exe: classifier.cpp
-	$(CXX) $(CXXFLAGS) classifier.cpp -o $@
-
-# disable built-in rules
-.SUFFIXES:
-
-# these targets do not create any files
-.PHONY: clean
-clean :
-	rm -vrf *.o *.exe *.gch *.dSYM *.stackdump *.out.txt
-
-# Run style check tools
-CPD ?= /usr/um/pmd-6.0.1/bin/run.sh cpd
-OCLINT ?= /usr/um/oclint-22.02/bin/oclint
-FILES := classifier.cpp
-CPD_FILES := classifier.cpp
-style :
-	$(OCLINT) \
-    -rule=LongLine \
-    -rule=HighNcssMethod \
-    -rule=DeepNestedBlock \
-    -rule=TooManyParameters \
-    -rc=LONG_LINE=90 \
-    -rc=NCSS_METHOD=40 \
-    -rc=NESTED_BLOCK_DEPTH=4 \
-    -rc=TOO_MANY_PARAMETERS=4 \
-    -max-priority-1 0 \
-    -max-priority-2 0 \
-    -max-priority-3 0 \
-    $(FILES) \
-    -- -xc++ --std=c++17
-	$(CPD) \
-    --minimum-tokens 100 \
-    --language cpp \
-    --failOnViolation true \
-    --files $(CPD_FILES)
-	@echo "########################################"
-	@echo "EECS 280 style checks PASS"
-sync :
-	rsync \
-  -rtv \
-  --delete \
-  --exclude '.git*' \
-  --filter=':- .gitignore' \
-  ../p4-ml-classifier/ \
-  jtuatini@login-course.engin.umich.edu:p4-ml-classifier-copy/
+clean:
+	rm -f $(EXECUTABLE) $(EXECUTABLE).exe
+	rm -rf $(EXECUTABLE).dSYM
