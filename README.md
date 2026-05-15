@@ -26,10 +26,10 @@ Weighted spread exhibited the strongest individual correlation with AP rank (p <
 
     AP = 0.150·PA − 0.135·Weighted_Team_O/U + 1.122·Weighted_Opp_O/U − 7.828
 
-| Season | n | R² | Pearson r | Playoff bracket accuracy |
-|---|---|---|---|---|
-| 2024 (SPSS fit, in-sample) | 25 | 0.483 | 0.695 | 11 / 11 |
-| 2025 (held-out test)       | 25 | 0.552 | 0.743 | 7 / 11 |
+| Season | n | R² | Pearson r | Playoff bracket accuracy | Higher-seed baseline |
+|---|---|---|---|---|---|
+| 2024 (SPSS fit, in-sample) | 25 | 0.483 | 0.695 | 11 / 11 | 4 / 11 |
+| 2025 (held-out test)       | 25 | 0.552 | 0.743 |  7 / 11 | 5 / 11 |
 
 When plotted against actual AP rank, predicted values produced a slope of 0.9995 on the 2024 season (Figure 3 of the original poster). On the 2025 season, with the same coefficients applied prospectively, the model retained an R² of 0.55, a result comparable to and slightly exceeding the in-sample fit.
 
@@ -37,7 +37,7 @@ A re-ranking of the AP top 25 (Figure 4 of the original poster) shows continued 
 
 ## Discussion
 
-Both Weighted Spread, Points Against, and Weighted Opponent O/U are positively correlated with AP rank, whereas Weighted Team O/U is negatively correlated. This matches predictive expectation: stronger teams are favored more heavily (negative spreads), give up fewer points, and have lower opponent O/U projections. The 2025 out-of-sample evaluation supports the original 2024 conclusion, that sports betting markets carry signal predictive of the final AP poll and the resulting playoff field, and demonstrates that the fit was not season-specific. A C++ re-ranking implementation (`src/classifier.cpp`) produced 11 / 11 correct CFP head-to-head predictions for 2024 and 7 / 11 for 2025, against an expected baseline of 5.5 by chance.
+Both Weighted Spread, Points Against, and Weighted Opponent O/U are positively correlated with AP rank, whereas Weighted Team O/U is negatively correlated. This matches predictive expectation: stronger teams are favored more heavily (negative spreads), give up fewer points, and have lower opponent O/U projections. The 2025 out-of-sample evaluation supports the original 2024 conclusion, that sports betting markets carry signal predictive of the final AP poll and the resulting playoff field, and demonstrates that the fit was not season-specific. A C++ re-ranking implementation (`src/classifier.cpp`) produced 11 / 11 correct CFP head-to-head predictions for 2024 and 7 / 11 for 2025, in both cases exceeding the trivial baseline of defaulting to the higher seed (4 / 11 and 5 / 11 respectively). Notably, the higher-seed baseline performed below chance in 2024 and only marginally above it in 2025, reflecting an increase in single-elimination upsets following the playoff's expansion from four to twelve teams.
 
 The principal limitation remains the small sample (n = 25 per season). No individual coefficient clears the conventional p < 0.05 threshold in the multivariate model, though the overall F-test is significant at p = 0.003. Natural extensions include re-fitting on the combined 50-team dataset, switching the playoff-prediction variant from linear to logistic regression, and incorporating broader feature sets.
 
