@@ -26,10 +26,12 @@ Weighted spread exhibited the strongest individual correlation with AP rank (p <
 
     AP = 0.150·PA − 0.135·Weighted_Team_O/U + 1.122·Weighted_Opp_O/U − 7.828
 
-| Season | n | R² | Pearson r | Playoff bracket accuracy | Higher-seed baseline |
-|---|---|---|---|---|---|
-| 2024 (SPSS fit, in-sample) | 25 | 0.483 | 0.695 | 11 / 11 | 4 / 11 |
-| 2025 (held-out test)       | 25 | 0.552 | 0.743 |  7 / 11 | 5 / 11 |
+| Season | n | R² | Playoff bracket accuracy † | Higher-seed baseline |
+|---|---|---|---|---|
+| 2024 (SPSS fit, in-sample) | 25 | 0.483 | 11 / 11 | 4 / 11 |
+| 2025 (held-out test)       | 25 | 0.552 |  7 / 11 | 5 / 11 |
+
+<sub>† Playoff games were not used in fitting the regression; the bracket accuracy reflects pre-playoff features predicting post-bracket outcomes.</sub>
 
 On the 2025 season, with the same coefficients applied prospectively, the model retained an R² of 0.55 — comparable to and slightly exceeding the in-sample fit of R² = 0.48.
 
